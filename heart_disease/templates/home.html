@@ -4,140 +4,193 @@
     <meta charset="UTF-8">
     <title>Heart Disease Prediction</title>
 
+    <!-- Responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
-            background: linear-gradient(120deg, #f0f4ff, #ffffff);
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: "Segoe UI", sans-serif;
         }
+
+        .main-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .card-container {
+            width: 100%;
+            max-width: 900px;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+            padding: 24px;
+        }
+
         .app-title {
             font-weight: 700;
-            letter-spacing: 1px;
+            color: #0d6efd;
         }
-        .result-box {
-            font-size: 1.2rem;
+
+        .subtitle {
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+
+        .accuracy-box {
+            background: linear-gradient(90deg, #1b5e20, #2e7d32);
+            color: #fff;
+            border-radius: 10px;
+            padding: 12px;
             font-weight: 600;
+            text-align: center;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        input {
+            height: 44px;
+            border-radius: 8px;
+        }
+
+        .btn-predict {
+            height: 50px;
+            font-size: 1.05rem;
+            border-radius: 12px;
+        }
+
+        .result-box {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        footer {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-align: center;
+            margin-top: 16px;
         }
     </style>
 </head>
 
 <body>
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
+<div class="main-wrapper">
 
-            <!-- HEADER -->
-            <div class="text-center mb-4">
-                <h1 class="app-title text-primary">
-                    🫀 Coronary Heart Disease Prediction
-                </h1>
-                <p class="text-muted">
-                    Machine Learning based early risk detection system
-                </p>
-            </div>
+    <div class="card-container">
 
-            <!-- CARD -->
-            <div class="card shadow-lg border-0">
-                <div class="card-body p-4">
+        <!-- HEADER -->
+        <div class="text-center mb-3">
+            <h2 class="app-title">🫀 Coronary Heart Disease Prediction</h2>
+            <p class="subtitle">
+                Machine Learning based early risk detection system
+            </p>
+        </div>
 
-                    <!-- ACCURACY -->
-                    <div class="alert alert-success text-center">
-                        <strong>Model Accuracy:</strong> {{ accuracy }} %
-                    </div>
+        <!-- ACCURACY -->
+        <div class="accuracy-box mb-4">
+            Model Accuracy: {{ accuracy }} %
+        </div>
 
-                    <!-- FORM -->
-                    <form method="POST" action="{% url 'predict' %}">
-                        {% csrf_token %}
+        <!-- FORM -->
+        <form method="POST" action="{% url 'predict' %}">
+            {% csrf_token %}
 
-                        <div class="row g-3">
+            <!-- Responsive Grid -->
+            <div class="row g-3">
 
-                            <div class="col-md-6">
-                                <label class="form-label">Gender (Male = 1, Female = 0)</label>
-                                <input type="number" class="form-control" name="male" required>
-                            </div>
+                <div class="col-12 col-md-6">
+                    <label>Gender (Male = 1, Female = 0)</label>
+                    <input type="number" class="form-control" name="male" required>
+                </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Age</label>
-                                <input type="number" class="form-control" name="age" required>
-                            </div>
+                <div class="col-12 col-md-6">
+                    <label>Age</label>
+                    <input type="number" class="form-control" name="age" required>
+                </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Cigarettes Per Day</label>
-                                <input type="number" class="form-control" name="cigsPerDay">
-                            </div>
+                <div class="col-12 col-md-6">
+                    <label>Cigarettes Per Day</label>
+                    <input type="number" class="form-control" name="cigsPerDay">
+                </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">BP Medications (1 = Yes, 0 = No)</label>
-                                <input type="number" class="form-control" name="BPMeds">
-                            </div>
+                <div class="col-12 col-md-6">
+                    <label>BP Medications (1 = Yes, 0 = No)</label>
+                    <input type="number" class="form-control" name="BPMeds">
+                </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Prevalent Stroke</label>
-                                <input type="number" class="form-control" name="prevalentStroke">
-                            </div>
+                <div class="col-12 col-md-6">
+                    <label>Prevalent Stroke</label>
+                    <input type="number" class="form-control" name="prevalentStroke">
+                </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Diabetes</label>
-                                <input type="number" class="form-control" name="diabetes">
-                            </div>
+                <div class="col-12 col-md-6">
+                    <label>Diabetes</label>
+                    <input type="number" class="form-control" name="diabetes">
+                </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Total Cholesterol</label>
-                                <input type="number" class="form-control" name="totChol">
-                            </div>
+                <div class="col-12 col-md-6">
+                    <label>Total Cholesterol</label>
+                    <input type="number" class="form-control" name="totChol">
+                </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Systolic BP</label>
-                                <input type="number" class="form-control" name="sysBP">
-                            </div>
+                <div class="col-12 col-md-6">
+                    <label>Systolic BP</label>
+                    <input type="number" class="form-control" name="sysBP">
+                </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">BMI</label>
-                                <input type="number" step="0.1" class="form-control" name="BMI">
-                            </div>
+                <div class="col-12 col-md-6">
+                    <label>BMI</label>
+                    <input type="number" step="0.1" class="form-control" name="BMI">
+                </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Heart Rate</label>
-                                <input type="number" class="form-control" name="heartRate">
-                            </div>
+                <div class="col-12 col-md-6">
+                    <label>Heart Rate</label>
+                    <input type="number" class="form-control" name="heartRate">
+                </div>
 
-                            <div class="col-md-12">
-                                <label class="form-label">Glucose Level</label>
-                                <input type="number" class="form-control" name="glucose">
-                            </div>
-                        </div>
-
-                        <div class="text-center mt-4">
-                            <button class="btn btn-primary btn-lg px-5">
-                                Predict Risk
-                            </button>
-                        </div>
-                    </form>
-
-                    <!-- RESULT -->
-                    {% if result %}
-                    <div class="alert alert-info text-center mt-4 result-box">
-                        {{ result }}
-                    </div>
-                    {% endif %}
-                    {% if explanation %}
-                    <div class="alert alert-warning mt-3">
-                        <h5>🧠 AI Explanation</h5>
-                        <p>{{ explanation }}</p>
-                    </div>
-                    {% endif %}
+                <div class="col-12">
+                    <label>Glucose Level</label>
+                    <input type="number" class="form-control" name="glucose">
                 </div>
             </div>
 
-            <!-- FOOTER -->
-            <div class="text-center mt-4 text-muted">
-                © 2026 | ML-based Healthcare Prediction System
-            </div>
+            <button class="btn btn-primary btn-predict w-100 mt-4">
+                Predict Risk
+            </button>
+        </form>
 
+        <!-- RESULT -->
+        {% if result %}
+        <div class="alert alert-info mt-4 result-box">
+            {{ result }}
         </div>
+        {% endif %}
+
+        {% if explanation %}
+        <div class="alert alert-warning mt-3">
+            <strong>🧠 AI Explanation</strong><br>
+            {{ explanation }}
+        </div>
+        {% endif %}
+
+        <footer>
+            © 2026 | ML-based Healthcare Prediction System
+        </footer>
+
     </div>
+
 </div>
 
 </body>
