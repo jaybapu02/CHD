@@ -124,7 +124,7 @@ http://127.0.0.1:8000/
 
 ## 👨‍💻 Author
 
-**Jaychandra Das**
+**Jaychandra Das** -> Tech Explorer
 
 ---
 
